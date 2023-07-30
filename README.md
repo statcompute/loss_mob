@@ -1,3 +1,5 @@
+### Monotonic Optimal Binning for Loss Models
+
 #### Introduction
 
 To mimic the py\_mob package (https://pypi.org/project/py-mob) for binary outcomes, the loss\_mob is a collection of python functions that would generate the monotonic binning and perform the variable transformation for loss or severity such that the Pearson correlation between the transformed $X$ and $Log(Y)$ is equal to 1. In case of loss models with $Log()$ link function, the transformation is derived as $F(x)_i = Log \frac{\sum_i Y / \sum_i Exposure}{\sum Y / \sum Exposure}$ in the training sample, where $Exposure$ is the number of cases and $i$ refers to the $ith$ bin groupped by $x$ values.  
