@@ -9,7 +9,7 @@ Should you have any question or suggestion about the package, please feel free t
 #### Core Functions
 
 ```
-freq_mob
+loss_mob
   |-- qtl_bin()  : An iterative discretization based on quantiles of X.  
   |-- los_bin()  : A revised iterative discretization for records with Y > 0.
   |-- iso_bin()  : A discretization algorthm driven by the isotonic regression between X and Y. 
