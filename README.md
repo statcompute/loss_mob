@@ -21,6 +21,8 @@ loss_mob
   |-- chk_newx() : Verifies the transformation generated from the cal_newx() function.
   |-- mi_score() : Calculates the Mutual Information (MI) score between X and Y.
   |-- screen()   : Calculates Spearman and Distance Correlations between X and Y.
+  |-- gini()     : Calculates the gini-coefficient between X and Y.
+  |-- smape()    : Calculates the sMAPE value between Y and Yhat.
   `-- get_mtpl() : Extracts French Motor Third-Part Liability Claims dataset from OpenML.
 ```
 
@@ -29,6 +31,7 @@ loss_mob
 ```python
 import loss_mob as mob
 
+# LOAD THE DATASET
 data = mob.get_mtpl()
 
 data.keys()
@@ -37,8 +40,10 @@ data.keys()
 
 var = ['vehpower', 'vehage', 'drivage', 'bonusmalus', 'density']
 
+# SCREEN EACH VARIABLE OF INTEREST
 rst = [{"variable": _, **mob.screen(data[_], data["purepremium"])} for _ in var]
 
+# RANK VARIABLES BY DISTANCE CORRELATION
 for _ in sorted(rst, key = lambda x: -abs(x["distance correlation"])):
   print(_)
 
@@ -48,6 +53,7 @@ for _ in sorted(rst, key = lambda x: -abs(x["distance correlation"])):
 # {'variable': 'vehage', 'total records': 678013, 'nonmissing records': 678013, 'missing percent': 0.0, 'unique value count': 78, 'coefficient of variation': 0.80437458, 'spearman correlation': 0.01952645, 'distance correlation': 0.01080137}
 # {'variable': 'vehpower', 'total records': 678013, 'nonmissing records': 678013, 'missing percent': 0.0, 'unique value count': 12, 'coefficient of variation': 0.31774149, 'spearman correlation': 0.00230745, 'distance correlation': 0.00356986}
 
+# GENERATE BINNING BASED ON GBM FOR EACH VARIABLE
 bout = dict((v, mob.gbm_bin(data[v], data["purepremium"])) for v in var)
 mob.view_bin(bout["vehage"])
 
@@ -57,6 +63,7 @@ mob.view_bin(bout["vehage"])
 # |   2   | 194371 |      0 |  69559830.5303 | 357.8714 | -0.06854178 | $X$ > 6 and $X$ <= 12     |
 # |   3   | 127288 |      0 |  75609359.3214 | 594.0023 |  0.43816751 | $X$ > 12                  |
 
+# VARIABLE TRANSFORMATION
 dout = mob.cal_newx(data['vehage'], bout["vehage"])
 mob.head(dout)
 
@@ -64,6 +71,7 @@ mob.head(dout)
 # {'x': 5, 'bin': 1, 'newx': -0.17468183}
 # {'x': 0, 'bin': 1, 'newx': -0.17468183}
 
+# VALIDATE THE TRANSFORMATION
 mob.chk_newx(dout)
 
 # |  bin  |        newx |   freq |    dist    |         xrng              |
