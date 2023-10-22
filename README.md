@@ -21,7 +21,8 @@ loss_mob
   |-- chk_newx() : Verifies the transformation generated from the cal_newx() function.
   |-- mi_score() : Calculates the Mutual Information (MI) score between X and Y.
   |-- screen()   : Calculates Spearman and Distance Correlations between X and Y.
-  |-- gini()     : Calculates the gini-coefficient between X and Y.
+  |-- bin_gini() : Calculates the gini-coefficient between X and Y based on the binning outcome.
+  |-- num_gini() : Calculates the gini-coefficient between raw values of X and Y.
   |-- smape()    : Calculates the sMAPE value between Y and Yhat.
   `-- get_mtpl() : Extracts French Motor Third-Part Liability Claims dataset from OpenML.
 ```
